@@ -5,15 +5,30 @@
 		<div class="container">
 			<div class="one-half column">
 				<h3>Login</h3>
-				<form action="login" method="post">
-					<label for="email">Email</label>
-					<input class="u-full-width" type="email" name="email" required="required" placeholder="john.smith@email.com">
+				<form action="login" method="POST">
+					<!-- set the CSRF token -->
+					{{ form.hidden_tag() }}
 
-					<label for="password">Password</label>
-					<input class="u-full-width" type="password" name="password" placeholder="Password" required="required" minlength="8">
+					<!-- email field -->
+					{{ form.email.label() }}
+					{{ form.email(class='u-full-width') }}
+
+					<!-- password field -->
+					{{ form.password.label() }}
+					{{ form.password(class='u-full-width') }}
 
 					<br>
-					<input class="button-primary" type="submit" value="Register">
+					<!-- login button -->
+					{{ form.submit(class='button-primary') }}
+
+					<!-- remember me checkbox -->
+					<div class="u-pull-right">
+						<div style="disply:'inline-block';">
+							{{ form.remember.label() }}
+							{{ form.remember() }}
+						</div>
+						</div>
+					<div class="u-cf"></div>
 				</form>						
 			</div>
 		</div>

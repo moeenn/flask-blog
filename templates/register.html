@@ -5,21 +5,34 @@
 		<div class="container">
 			<div class="one-half column">
 				<h3>Register</h3>
-				<form action="register" method="post">
-					<label for="name">Name</label>
-					<input class="u-full-width" type="text" name="name" placeholder="John Smith" required="required" maxlength="20">
+				<form action="register" method="POST">
+					<!-- add the CSRF token -->
+					{{ form.hidden_tag() }}
 
-					<label for="email">Email</label>
-					<input class="u-full-width" type="email" name="email" required="required" placeholder="john.smith@email.com">
+					<!-- name field -->
+					{{ form.name.label() }}
+					{{ form.name(class='u-full-width') }}
 
-					<label for="password">Password</label>
-					<input class="u-full-width" type="password" name="password" placeholder="Password" required="required" minlength="8">
+					<!-- email field -->
+					{{ form.email.label() }}
+					{{ form.email(class='u-full-width')}}
 
-					<label for="confirm_password">Confirm Password</label>
-					<input class="u-full-width" type="password" name="confirm_password" placeholder="Password" required="required" minlength="8">
+					<!-- password field -->
+					{{ form.password.label() }}
+					{{ form.password(class='u-full-width') }}
+
+					<!-- confirm password field -->
+					{{ form.confirm_password.label() }}
+					{{ form.confirm_password(class='u-full-width') }}
 
 					<br>
-					<input class="button-primary" type="submit" value="Register">
+
+					<!-- submit button -->
+					{{ form.submit(class='button-primary') }}
+
+					<!-- login button -->
+					<hr>
+					<p>Already Have an Account?  <a href="{{ url_for('login')}}">Login</a></p>
 				</form>						
 			</div>
 		</div>

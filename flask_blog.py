@@ -1,6 +1,13 @@
 # start the server 
 from flask import Flask, render_template
+
+# import forms
+from forms import RegistrationForm, LoginForm
+
 app = Flask('__name__')
+
+# application secret key
+app.config['SECRET_KEY'] = 'e48b6e01762d0335a47e2b9cdaa389c8'
 
 # dummy data
 posts = [
@@ -33,15 +40,19 @@ def home():
 def about():
     return render_template('about.html', title='About')
 
+
 # registration page
 @app.route('/register')
 def register():
-    return render_template('register.html')
+    form = RegistrationForm()
+    return render_template('register.html', title='Register', form=form)
 
+# file: flask_blog.py
 # login page
 @app.route('/login')
 def login():
-    return render_template('login.html')
+    form = LoginForm()
+    return render_template('login.html', title='Login', form=form)
 
 
 if __name__ == '__main__':
