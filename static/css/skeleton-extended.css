@@ -1,0 +1,148 @@
+/* navigation bar */
+nav {
+	background: white;
+	font-size: 0;
+	padding: 0;
+	border-bottom: solid 1px #e1e1e1;
+} 
+
+nav a {
+	display: inline-block;
+	font-size: 1.8rem;
+	color: #222;
+	text-align: center;
+	padding: 1.3rem 2rem 0.7rem 2rem;
+	text-decoration: none;
+	font-size: 1.3rem;
+	border-bottom: solid 2px transparent;
+}
+
+nav a:hover {
+	background: #f9f9f9;
+	color: #222;
+	border-bottom: solid 2px #959595;
+}
+
+nav .active {
+	font-weight: bold;
+	border-bottom: solid 2px #757575;
+}
+
+/* table */
+/* set the row hover effect */
+tbody tr:hover {
+	background: #f9f9f9;
+}
+
+/* fix left padding */
+th:first-child,
+td:first-child {
+	padding-left: 2rem; 
+}
+
+/* fix right padding */
+th:last-child,
+td:last-child {
+	padding-right: 2rem; 
+}
+
+/* buttons */
+.button.button-secondary,
+button.button-secondary,
+input[type="submit"].button-secondary,
+input[type="reset"].button-secondary,
+input[type="button"].button-secondary {
+	color: #5a5a5a;
+	background-color: #e0e1e2;
+	border-color: #e0e1e2; 
+}
+
+.button.button-secondary:hover,
+button.button-secondary:hover,
+input[type="submit"].button-secondary:hover,
+input[type="reset"].button-secondary:hover,
+input[type="button"].button-secondary:hover,
+.button.button-secondary:focus,
+button.button-secondary:focus,
+input[type="submit"].button-secondary:focus,
+input[type="reset"].button-secondary:focus,
+input[type="button"].button-secondary:focus {
+	background-color: #cacbcd;
+	border-color: #cacbcd; 
+	color: #292929;
+}
+
+/* messages */
+.message {
+	padding: 2.5rem;
+	margin: 1.5rem 0rem;
+	border-radius: 4px;
+	border: 1px solid #bbb;
+	background: #f8f8f9;
+}  
+
+.message h1 {
+	font-size: 1.1em;
+	font-weight: bold;
+	margin-bottom: 0.5rem;
+}
+
+.message p {
+	text-align: justify;
+	padding: 0px;
+	margin: 0px;
+}
+
+
+/* boxes */
+.box {
+	padding: 2rem;
+	border-radius: 4px;
+	border: 1px solid #d4d4d5;
+}
+
+/* make a block element stick to the top */
+.u-sticky {
+	position: sticky;
+	top: 0;
+	z-index: 1;
+}
+
+/* override default text selection colors */
+::-moz-selection {
+  background: #cce1fe;
+}
+
+::selection {
+  background: #cce1fe;
+}
+
+/* shadow */
+.shadow {
+	box-shadow: 0rem 0rem 0.6rem #e5e5e5;
+}
+
+/* event color */
+.positive {
+	background: #fcfff5;
+	color: #1a531b;
+	border-color: #a3c293;
+}
+
+.negative {
+	background: #fff6f6;
+	color: #912d2b;
+	border-color: #e0b4b4;	
+}
+
+.alert {
+	background: #fffaf3;
+	color: #573a08;
+	border-color: #c9ba9b; 
+}
+
+.info {
+	background: #f8ffff;
+	color: #478598;
+	border-color: #a9d5de;
+}

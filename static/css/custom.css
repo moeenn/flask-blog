@@ -1,0 +1,21 @@
+.container {
+	margin-top: 2rem;
+}
+
+.box {
+	margin: 2rem 0rem;	
+}
+
+.box h4 {
+	margin-bottom: 0rem;
+}
+
+.box p {
+	margin-top: 1.5rem;
+	margin-bottom: 0rem;
+}
+
+.box hr {
+	margin: 0rem;
+	padding: 0rem;
+}

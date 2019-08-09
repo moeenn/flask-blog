@@ -1,0 +1,37 @@
+<!-- file: layout.html -->
+<!DOCTYPE html>
+ <html>
+ <head>
+ 	<!-- page title -->
+ 	{% if title %}
+ 		<title>Flask Blog - {{ title }}</title>
+ 	{% else %}
+ 		<title>Flask Blog</title>
+ 	{% endif %}
+
+ 	<!-- general stuff -->
+ 	<meta charset="utf-8">
+
+ 	<!-- stylesheets -->
+ 	<link rel="stylesheet" href="{{ url_for('static', filename='css/normalize.css')}}">
+ 	<link rel="stylesheet" href="{{ url_for('static', filename='css/skeleton.css')}}"> 
+ 	<link rel="stylesheet" href="{{ url_for('static', filename='css/skeleton-extended.css')}}">
+ 	<link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css')}}">
+ </head>
+ <body>
+ 	<section class="section u-sticky navigation">
+ 		<div class="container">
+ 			<nav>
+ 				<a href="home">Home</a>
+ 				<a href="about">About</a>
+ 				<div class="u-pull-right">
+	 				<a href="login">Login</a>
+	 				<a href="register">Register</a>				
+ 				</div>
+ 				<div class="u-cf"></div>
+ 			</nav>
+ 		</div>
+ 	</section>
+ 	{% block content %}{% endblock %}
+ </body>
+ </html> 
