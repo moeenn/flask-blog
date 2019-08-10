@@ -1,3 +1,8 @@
+/* container */	
+.section {
+	margin: 1rem 0rem;
+}
+
 /* navigation bar */
 nav {
 	background: white;
@@ -6,6 +11,7 @@ nav {
 	border-bottom: solid 1px #e1e1e1;
 } 
 
+/* links in nav bar */
 nav a {
 	display: inline-block;
 	font-size: 1.8rem;
@@ -15,10 +21,11 @@ nav a {
 	text-decoration: none;
 	font-size: 1.3rem;
 	border-bottom: solid 2px transparent;
+	margin-bottom: -1px;
 }
 
 nav a:hover {
-	background: #f9f9f9;
+	background: rgba(0,0,0,0.02);
 	color: #222;
 	border-bottom: solid 2px #959595;
 }
@@ -28,10 +35,53 @@ nav .active {
 	border-bottom: solid 2px #757575;
 }
 
+/* switch to mobile at 750px */
+@media (max-width: 750px) {
+	nav div {
+		display: block;
+		position: absolute;
+		left: 0rem;
+		bottom: -15rem;
+	}
+
+	nav a {
+		display: block;
+		text-align: left;
+		padding-left: 2rem;
+	}
+
+	nav a:hover {
+		border-bottom: solid 2px transparent;
+	}
+
+	nav .active {
+		border-bottom: solid 2px transparent;
+	}
+}
+
+/* paragraphs */
+p {
+	margin-top: 1.5rem;
+	margin-bottom: 0rem;
+}
+
+/* horizontal rule */
+hr {
+	margin: 1rem 0rem;
+}
+
 /* table */
+
+legend {
+	font-size: 3rem;
+	margin-top: 0;
+  	margin-bottom: 1rem;
+  	font-weight: 300;
+}
+
 /* set the row hover effect */
 tbody tr:hover {
-	background: #f9f9f9;
+	background: rgba(0,0,0,0.02);
 }
 
 /* fix left padding */
@@ -74,11 +124,11 @@ input[type="button"].button-secondary:focus {
 
 /* messages */
 .message {
-	padding: 2.5rem;
-	margin: 1.5rem 0rem;
+	padding: 2rem;
+	margin: 1rem 0rem;
 	border-radius: 4px;
 	border: 1px solid #bbb;
-	background: #f8f8f9;
+	background: rgba(0,0,0,0.03);
 }  
 
 .message h1 {
@@ -97,12 +147,18 @@ input[type="button"].button-secondary:focus {
 /* boxes */
 .box {
 	padding: 2rem;
+	margin: 2rem 0rem;
 	border-radius: 4px;
 	border: 1px solid #d4d4d5;
 }
 
+.box hr {
+	margin: 0rem;
+	padding: 0rem;
+}
+
 /* make a block element stick to the top */
-.u-sticky {
+.sticky {
 	position: sticky;
 	top: 0;
 	z-index: 1;

@@ -1,35 +1,17 @@
-.container {
-	margin-top: 2rem;
-}
-
-.box {
-	margin: 2rem 0rem;	
-}
-
 .box h4 {
 	margin-bottom: 0rem;
 }
 
-p {
-	margin-top: 1.5rem;
-	margin-bottom: 0rem;
-}
-
-.box hr {
-	margin: 0rem;
-	padding: 0rem;
-}
-
-hr {
-	margin: 1rem 0rem;
-}
-
 footer {
 	text-align: center;
-	margin-bottom: 2rem;
+	margin: 2rem 0rem;
 }
 
-.message {
-	padding: 2rem;
-	margin: 1rem 0rem;
+a {
+	text-decoration: none;
+	color: #0c6d81;
+}
+
+a:hover {
+	color: #095c6d;
 }

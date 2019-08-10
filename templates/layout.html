@@ -19,16 +19,13 @@
  	<link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css')}}">
  </head>
  <body>
- 	<section class="section u-sticky navigation">
+ 	<section class="section sticky navigation">
  		<div class="container">
  			<nav>
- 				<a {% if request.path == '/home' %} class="active" {% endif %} href="{{ url_for('home') }}">Home</a>
+ 				<a {% if request.path in ['/', '/home'] %} class="active" {% endif %} href="{{ url_for('home') }}">Home</a>
  				<a {% if request.path == '/about' %} class="active" {% endif %} href=" {{ url_for('about') }}">About</a>
- 				<div class="u-pull-right">
-	 				<a {% if request.path == '/login' %} class="active" {% endif %} href=" {{ url_for('login') }}">Login</a>
-	 				<a {% if request.path == '/register' %} class="active" {% endif %} href=" {{ url_for('register') }} ">Register</a>				
- 				</div>
- 				<div class="u-cf"></div>
+ 				<a {% if request.path == '/login' %} class="active" {% endif %} href=" {{ url_for('login') }}">Login</a>
+ 				<a {% if request.path == '/register' %} class="active" {% endif %} href=" {{ url_for('register') }} ">Register</a>
  			</nav>
  		</div>
  	</section>
@@ -36,13 +33,13 @@
  	{% with messages = get_flashed_messages( with_categories=True ) %}
  		{% if messages %}
  			{% for category, message in messages %}
- 				<div class="section flashed_messages">
+ 				<section class="section flashed_messages">
  					<div class="container">
  						<div class="message {{category}}">
  							<p>{{ message }}</p>
  						</div>
  					</div>
- 				</div>
+ 				</section>
 			{% endfor %}
  		{% endif %}
  	{% endwith %}
@@ -53,8 +50,8 @@
  	<!-- footer section -->
  	<section class="section footer">
  		<div class="container">
- 	 		<hr>
 	 		<footer class="u-full-width">
+	 	 		<hr>
 	 			<small>&copy Copyright 2019 - Muhammad Moeen</small>
 	 		</footer>		
  		</div>

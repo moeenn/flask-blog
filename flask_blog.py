@@ -1,4 +1,11 @@
+# flask module and functions
 from flask import Flask, render_template, flash, redirect, request
+
+# SQLAlchemy module (ORM)
+from flask_sqlalchemy import SQLAlchemy
+
+# date time module
+from datetime import datetime
 
 # import forms
 from forms import RegistrationForm, LoginForm, RecoverAccount
@@ -9,27 +16,61 @@ app = Flask('__name__')
 # application secret key
 app.config['SECRET_KEY'] = 'e48b6e01762d0335a47e2b9cdaa389c8'
 
+# set location of the database
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
+
+# create the database
+db = SQLAlchemy(app)
+
+# users table
+class User(db.Model):
+    id = db.Column( db.Integer, primary_key = True )
+    name = db.Column( db.String(20), unique = True, nullable = False )
+    email = db.Column( db.String(120), unique = True, nullable = False )
+    image_file = db.Column( db.String(20), nullable = False, default = 'default.jpg' )
+    password = db.Column( db.String(60), nullable = False )
+    posts = db.relationship('Post', backref = 'author', lazy = True )
+    
+    def __repr__(self):
+        return f"User('{self.name}', '{self.email}', '{self.image_file}')"
+
+# table for posts
+class Post(db.Model):
+    id = db.Column( db.Integer, primary_key = True )
+    title = db.Column( db.String(200), nullable = False )
+    date_posted = db.Column( db.DateTime, nullable = False, default = datetime.utcnow )
+    content = db.Column( db.Text, nullable = False )
+    user_id = db.Column( db.Integer, db.ForeignKey('user.id'), nullable = False )
+    
+    def __repr__(self):
+        return f"Post('{self.title}', '{self.date_posted}')"
+
+
 # dummy data
 posts = [
     {
       'author': 'Carl Sagan', 
       'title': 'Pale Blue Dot', 
-      'content': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam'
+      'content': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam',
+      'date':'June 30, 1990'
     },
     {
       'author': 'Neil Tyson', 
       'title': 'String Theory', 
-      'content': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam'
+      'content': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam',
+      'date':'February 15, 2003'
     },
     {
       'author': 'Michio Kaku', 
       'title': 'Soap Bubble Universe', 
-      'content': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam'
+      'content': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam',
+      'date':'November 27, 2009'
     },
     {
       'author': 'Max Tedmark', 
       'title': 'AI - The Last Invention of Man', 
-      'content': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam'
+      'content': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam',
+      'date':'April 10, 2016'
     }    
 ]
 

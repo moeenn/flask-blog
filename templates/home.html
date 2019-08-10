@@ -13,7 +13,7 @@
 					{% for post in posts %}
 						<div class="box">
 							<h4>{{ post.get('title') }}</h4>
-							<small>Author: <i>{{ post.get('author')}}</i></small>
+							<small>Author: <i><a href="#">{{ post.get('author')}}</a></i> on <i><a href="#">{{ post.get('date')}}</a></i></small>
 							<hr>
 							<p>{{ post.get('content') }}</p>
 							<br>
