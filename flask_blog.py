@@ -1,9 +1,9 @@
-# start the server 
-from flask import Flask, render_template
+from flask import Flask, render_template, flash, redirect
 
 # import forms
 from forms import RegistrationForm, LoginForm
 
+# start the server 
 app = Flask('__name__')
 
 # application secret key
@@ -42,16 +42,33 @@ def about():
 
 
 # registration page
-@app.route('/register')
+@app.route('/register', methods=[ 'GET', 'POST'])
 def register():
     form = RegistrationForm()
+    
+    # check if the inputs validate successfully
+    if form.validate_on_submit():
+        flash(f'Registration Successful. Welcome to Flask Blog', 'positive')
+        # redirect to home page
+        return redirect('home')
+
     return render_template('register.html', title='Register', form=form)
 
 # file: flask_blog.py
 # login page
-@app.route('/login')
+@app.route('/login', methods=[ 'GET', 'POST'])
 def login():
     form = LoginForm()
+    
+    # check if the form data validated successfully
+    if form.validate_on_submit():
+        # display the message to the user
+        flash(f'Login Successful: {form.email.data}', 'positive')
+        
+        # redirect to the home page
+        #return redirect(url_for('home'))
+        return redirect('home')
+        
     return render_template('login.html', title='Login', form=form)
 
 

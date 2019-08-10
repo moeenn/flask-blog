@@ -32,6 +32,32 @@
  			</nav>
  		</div>
  	</section>
- 	{% block content %}{% endblock %}
+ 	<!-- display flashed messages here -->
+ 	{% with messages = get_flashed_messages( with_categories=True ) %}
+ 		{% if messages %}
+ 			{% for category, message in messages %}
+ 				<div class="section flashed_messages">
+ 					<div class="container">
+ 						<div class="message {{category}}">
+ 							<p>{{ message }}</p>
+ 						</div>
+ 					</div>
+ 				</div>
+			{% endfor %}
+ 		{% endif %}
+ 	{% endwith %}
+
+ 	<!-- content from templates will be inserted here -->
+ 	{% block content %}{% endblock content %}
+
+ 	<!-- footer section -->
+ 	<section class="section footer">
+ 		<div class="container">
+ 	 		<hr>
+	 		<footer class="u-full-width">
+	 			<small>&copy Copyright - Muhammad Moeen - 2019</small>
+	 		</footer>		
+ 		</div>
+ 	</section>
  </body>
  </html> 
