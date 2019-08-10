@@ -1,0 +1,35 @@
+{% extends 'layout.html' %} 
+{% block content %} 
+
+	<section class="section login">
+		<div class="container">
+			<div class="one-half column">
+				<h3>{{ title }}</h3>
+				<form action="{{ url_for('recover_account') }}" method="POST">
+					<!-- set the CSRF token -->
+					{{ form.hidden_tag() }}
+
+					<!-- email field label -->
+					{{ form.email.label() }}
+
+					<!-- handle errors -->
+					{% if form.email.errors %}
+						<div class='message negative' style="padding: 1rem;">
+							{% for error in form.email.errors %}
+								<p>{{ error }}</p>
+							{% endfor %}
+						</div>					
+					{% endif %}
+
+					<!-- email field input -->
+					{{ form.email(class='u-full-width') }}
+
+					<br>
+					<!-- submit button -->
+					{{ form.submit(class='button-primary') }}
+				</form>						
+			</div>
+		</div>
+	</section>
+
+{% endblock content %} 

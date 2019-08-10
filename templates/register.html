@@ -4,25 +4,69 @@
 	<section class="section registration">
 		<div class="container">
 			<div class="one-half column">
-				<h3>Register</h3>
-				<form action="register" method="POST">
+				<h3>{{ title }}</h3>
+				<form action="{{ url_for('register') }}" method="POST">
 					<!-- add the CSRF token -->
 					{{ form.hidden_tag() }}
 
-					<!-- name field -->
+					<!-- name field label -->
 					{{ form.name.label() }}
+
+					<!-- handle errors -->
+					{% if form.name.errors %}
+						<div class='message negative' style="padding: 1rem;">
+							{% for error in form.name.errors %}
+								<p>{{ error }}</p>
+							{% endfor %}
+						</div>					
+					{% endif %}
+
+					<!-- name field input -->
 					{{ form.name(class='u-full-width') }}
 
-					<!-- email field -->
+					<!-- email field label -->
 					{{ form.email.label() }}
+
+					<!-- handle errors -->
+					{% if form.email.errors %}
+						<div class='message negative' style="padding: 1rem;">
+							{% for error in form.email.errors %}
+								<p>{{ error }}</p>
+							{% endfor %}
+						</div>					
+					{% endif %}
+
+					<!-- email field input -->
 					{{ form.email(class='u-full-width')}}
 
-					<!-- password field -->
+					<!-- password field label -->
 					{{ form.password.label() }}
+
+					<!-- handle errors -->
+					{% if form.password.errors %}
+						<div class='message negative' style="padding: 1rem;">
+							{% for error in form.password.errors %}
+								<p>{{ error }}</p>
+							{% endfor %}
+						</div>					
+					{% endif %}
+
+					<!-- password field input -->
 					{{ form.password(class='u-full-width') }}
 
-					<!-- confirm password field -->
+					<!-- confirm password field label -->
 					{{ form.confirm_password.label() }}
+
+					<!-- handle errors -->
+					{% if form.confirm_password.errors %}
+						<div class='message negative' style="padding: 1rem;">
+							{% for error in form.confirm_password.errors %}
+								<p>{{ error }}</p>
+							{% endfor %}
+						</div>					
+					{% endif %}
+
+					<!-- confirm password field input -->
 					{{ form.confirm_password(class='u-full-width') }}
 
 					<br>

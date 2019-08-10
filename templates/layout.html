@@ -22,11 +22,11 @@
  	<section class="section u-sticky navigation">
  		<div class="container">
  			<nav>
- 				<a href="{{ url_for('home') }}">Home</a>
- 				<a href=" {{ url_for('about') }}">About</a>
+ 				<a {% if request.path == '/home' %} class="active" {% endif %} href="{{ url_for('home') }}">Home</a>
+ 				<a {% if request.path == '/about' %} class="active" {% endif %} href=" {{ url_for('about') }}">About</a>
  				<div class="u-pull-right">
-	 				<a href=" {{ url_for('login') }}">Login</a>
-	 				<a href=" {{ url_for('register') }} ">Register</a>				
+	 				<a {% if request.path == '/login' %} class="active" {% endif %} href=" {{ url_for('login') }}">Login</a>
+	 				<a {% if request.path == '/register' %} class="active" {% endif %} href=" {{ url_for('register') }} ">Register</a>				
  				</div>
  				<div class="u-cf"></div>
  			</nav>
@@ -55,7 +55,7 @@
  		<div class="container">
  	 		<hr>
 	 		<footer class="u-full-width">
-	 			<small>&copy Copyright - Muhammad Moeen - 2019</small>
+	 			<small>&copy Copyright 2019 - Muhammad Moeen</small>
 	 		</footer>		
  		</div>
  	</section>

@@ -4,17 +4,39 @@
 	<section class="section login">
 		<div class="container">
 			<div class="one-half column">
-				<h3>Login</h3>
-				<form action="login" method="POST">
+				<h3>{{ title }}</h3>
+				<form action="{{ url_for('login') }}" method="POST">
 					<!-- set the CSRF token -->
 					{{ form.hidden_tag() }}
 
-					<!-- email field -->
+					<!-- email field label -->
 					{{ form.email.label() }}
+
+					<!-- handle errors -->
+					{% if form.email.errors %}
+						<div class='message negative' style="padding: 1rem;">
+							{% for error in form.email.errors %}
+								<p>{{ error }}</p>
+							{% endfor %}
+						</div>					
+					{% endif %}
+
+					<!-- email field input -->
 					{{ form.email(class='u-full-width') }}
 
-					<!-- password field -->
+					<!-- password field label -->
 					{{ form.password.label() }}
+
+					<!-- handle errors -->
+					{% if form.password.errors %}
+						<div class='message negative' style="padding: 1rem;">
+							{% for error in form.password.errors %}
+								<p>{{ error }}</p>
+							{% endfor %}
+						</div>					
+					{% endif %}
+
+					<!-- email field input -->
 					{{ form.password(class='u-full-width') }}
 
 					<br>
@@ -30,6 +52,11 @@
 						</div>
 					<div class="u-cf"></div>
 				</form>						
+
+				<!-- login button -->
+				<hr>
+				<p>Forgot Password?  <a href="{{ url_for('recover_account')}}">Recover Account</a></p>
+
 			</div>
 		</div>
 	</section>

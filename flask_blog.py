@@ -1,7 +1,7 @@
-from flask import Flask, render_template, flash, redirect
+from flask import Flask, render_template, flash, redirect, request
 
 # import forms
-from forms import RegistrationForm, LoginForm
+from forms import RegistrationForm, LoginForm, RecoverAccount
 
 # start the server 
 app = Flask('__name__')
@@ -25,7 +25,12 @@ posts = [
       'author': 'Michio Kaku', 
       'title': 'Soap Bubble Universe', 
       'content': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam'
-    }
+    },
+    {
+      'author': 'Max Tedmark', 
+      'title': 'AI - The Last Invention of Man', 
+      'content': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam'
+    }    
 ]
 
 
@@ -62,14 +67,37 @@ def login():
     
     # check if the form data validated successfully
     if form.validate_on_submit():
-        # display the message to the user
-        flash(f'Login Successful: {form.email.data}', 'positive')
+        # dummy login data
+        admin_account = { 'email':'admin@flaskblog.com', 'password':'password' }
         
-        # redirect to the home page
-        #return redirect(url_for('home'))
-        return redirect('home')
+        if form.email.data == admin_account['email'] and form.password.data == admin_account['password']:
+            # display the message to the user
+            flash(f'Login Successful: {form.email.data}', 'positive')
+            # redirect to the home page
+            #return redirect(url_for('home'))
+            return redirect('home')
+
+        else:
+            flash(f'Login Failed', 'negative')
+        
         
     return render_template('login.html', title='Login', form=form)
+
+
+# account recovery page
+@app.route('/recover_account', methods=[ 'GET', 'POST'])
+def recover_account():
+    form = RecoverAccount()
+    
+    if form.validate_on_submit():
+        flash(f"""Your request for account recovery has been submitted.
+               If the provided email address matches our records an email
+               will be sent to the email address with the link to reset the password.""",
+                'positive')
+        
+        return redirect('home')
+    
+    return render_template('recover_account.html', title='Recover Account', form=form)
 
 
 if __name__ == '__main__':
