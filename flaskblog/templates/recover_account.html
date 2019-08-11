@@ -5,6 +5,10 @@
 		<div class="container">
 			<div class="one-half column">
 				<h3>{{ title }}</h3>
+				<div class="message info">
+					<p>If you have forgotten your password, please enter your email address in the field below. If the provided email address matches our records, an email will be sent to the same email address with the link to recover the password.</p>
+				</div>
+				<br>
 				<form action="{{ url_for('recover_account') }}" method="POST">
 					<!-- set the CSRF token -->
 					{{ form.hidden_tag() }}

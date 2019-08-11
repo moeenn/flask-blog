@@ -3,6 +3,8 @@
 	<section class="section">
 		<div class="container" style="margin-top: 5rem;">
 			<div class="row">
+
+				<!-- main posts section -->
 				<div class="two-thirds column">
 					<h3>Welcome to our Home Page</h3>
 					<p style="text-align: justify;">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
@@ -13,12 +15,18 @@
 					{% for post in posts %}
 						<div class="box">
 							<h4>{{ post.get('title') }}</h4>
-							<small>Author: <i><a href="#">{{ post.get('author')}}</a></i> on <i><a href="#">{{ post.get('date')}}</a></i></small>
+							<small>Author: <i><a href="{{ url_for('profile') }}">{{ post.get('author')}}</a></i> on <i><a href="#">{{ post.get('date')}}</a></i></small>
 							<hr>
 							<p>{{ post.get('content') }}</p>
 							<br>
+							<a href="{{ url_for('article') }}">Read More</a>
 						</div>
 					{% endfor %}							
+				</div>
+			
+				<!-- banner for mood -->
+				<div class="one-third column">
+					<img src="{{ url_for('static', filename='images/home_banner.jpg')}}" style="width:100%">
 				</div>
 			</div>
 		</div>		

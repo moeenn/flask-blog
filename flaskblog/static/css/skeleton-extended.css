@@ -59,6 +59,11 @@ nav .active {
 	}
 }
 
+/* headings */
+h1, h2, h3, h4, h5, h6 {
+	margin-bottom: 0.5rem;
+}
+
 /* paragraphs */
 p {
 	margin-top: 1.5rem;
@@ -70,8 +75,18 @@ hr {
 	margin: 1rem 0rem;
 }
 
-/* table */
+/* links */
+a {
+	text-decoration: none;
+	color: #0c6d81;
+}
 
+a:hover {
+	color: #095c6d;
+}
+
+/* table */
+/* table heading */
 legend {
 	font-size: 3rem;
 	margin-top: 0;
@@ -96,30 +111,22 @@ td:last-child {
 	padding-right: 2rem; 
 }
 
-/* buttons */
-.button.button-secondary,
-button.button-secondary,
-input[type="submit"].button-secondary,
-input[type="reset"].button-secondary,
-input[type="button"].button-secondary {
-	color: #5a5a5a;
-	background-color: #e0e1e2;
-	border-color: #e0e1e2; 
+/* page number buttons */
+.pages {
+	display: inline-block;
+	border: solid 1px #bbb;
+	border-radius: 4px;
+	overflow: hidden;
 }
 
-.button.button-secondary:hover,
-button.button-secondary:hover,
-input[type="submit"].button-secondary:hover,
-input[type="reset"].button-secondary:hover,
-input[type="button"].button-secondary:hover,
-.button.button-secondary:focus,
-button.button-secondary:focus,
-input[type="submit"].button-secondary:focus,
-input[type="reset"].button-secondary:focus,
-input[type="button"].button-secondary:focus {
-	background-color: #cacbcd;
-	border-color: #cacbcd; 
-	color: #292929;
+.pages a {
+	display: inline-block;
+	border-radius: 0px;
+	padding: 0 1rem;
+}
+
+.pages a:hover {
+	background: rgba(0,0,0,0.1);
 }
 
 /* messages */

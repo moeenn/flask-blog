@@ -26,6 +26,7 @@
  				<a {% if request.path == '/about' %} class="active" {% endif %} href=" {{ url_for('about') }}">About</a>
  				<a {% if request.path == '/login' %} class="active" {% endif %} href=" {{ url_for('login') }}">Login</a>
  				<a {% if request.path == '/register' %} class="active" {% endif %} href=" {{ url_for('register') }} ">Register</a>
+ 				<a {% if request.path == '/profile' %} class="active" {% endif %} href="{{ url_for('profile') }}">Profile</a>
  			</nav>
  		</div>
  	</section>
@@ -51,7 +52,6 @@
  	<section class="section footer">
  		<div class="container">
 	 		<footer class="u-full-width">
-	 	 		<hr>
 	 			<small>&copy Copyright 2019 - Muhammad Moeen</small>
 	 		</footer>		
  		</div>
