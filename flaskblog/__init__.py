@@ -4,6 +4,12 @@ from flask import Flask
 # SQLAlchemy module (ORM)
 from flask_sqlalchemy import SQLAlchemy
 
+# hashing module
+from flask_bcrypt import Bcrypt
+
+# user login module
+from flask_login import LoginManager
+
 # start the server 
 app = Flask(__name__)
 
@@ -15,7 +21,13 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
 
 # create the database
 db = SQLAlchemy(app)
+
+# create the crypting object
+bcrypt = Bcrypt(app)
+
+# create user login manager object
+login_manager = LoginManager(app)
  
-# inport the routes 
+# import the routes 
 # should alway be inported after the app install has been created
 from flaskblog import routes
