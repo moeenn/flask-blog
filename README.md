@@ -4,6 +4,11 @@ A Blogging Web Application created using following technologies
 * Skeleton Extended CSS for Frontend - [Link](https://github.com/moeenn/skeleton-extended)
 
 ## Screenshots
+Special Thanks to Corey Schafer who is the Best Programming Teacher that I've ever had. Check him out
+* Website - [Link](https://coreyms.com/)
+* YouTube - [Link](https://www.youtube.com/user/schafer5)
+
+## Screenshots
 #### Home Page
 ![Home Page](screenshots/01_home.png)
 
