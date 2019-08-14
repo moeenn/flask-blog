@@ -27,6 +27,10 @@ bcrypt = Bcrypt(app)
 
 # create user login manager object
 login_manager = LoginManager(app)
+
+# required by login_required decorator from flask_login module
+login_manager.login_view = 'login'
+login_manager.login_message_category = 'info'
  
 # import the routes 
 # should alway be inported after the app install has been created

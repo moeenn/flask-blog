@@ -11,7 +11,7 @@ from flaskblog.forms import RegistrationForm, LoginForm, RecoverAccount
 from flaskblog.models import User, Post
 
 # user login 
-from flask_login import login_user, current_user, logout_user
+from flask_login import login_user, current_user, logout_user, login_required
 
 
 # dummy data
@@ -93,7 +93,6 @@ def login():
     if current_user.is_authenticated:
         return redirect( url_for('home') )
     
-    
     form = LoginForm()
     
     # check if the form data validated successfully
@@ -103,7 +102,8 @@ def login():
         if user and bcrypt.check_password_hash( user.password, form.password.data ):
             login_user( user, remember = form.remember.data )
             flash(f'Login Successful.', 'positive')
-            return redirect( url_for('profile') )
+            return redirect(next_page) if next_page else redirect( url_for('home') )
+            
         else:
             flash(f'Login Unsuccessful. Please check email and password', 'negative')            
 
@@ -135,6 +135,7 @@ def recover_account():
 
 # user profile page
 @app.route('/profile')
+@login_required
 def profile():
     return render_template('profile.html', title='Profile', posts=posts )
 
