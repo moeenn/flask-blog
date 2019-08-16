@@ -2,14 +2,23 @@
 {% block content %} 
 
 	<section class="section profile">
-		<div class="container" style="margin-top: 3rem;">
-			<div class="one-half column">
-				<form action="{{ url_for('register') }}" method="POST">
-					<!-- add the CSRF token -->
+		<div class="container">
+			<!-- encoding type required for file uploads -->
+			<form action="{{ url_for('profile_settings') }}" method="POST" enctype="multipart/form-data">
+				<div class="one-third column user_details">
+				    <!-- add the CSRF token -->
 					{{ form.hidden_tag() }}
 
-					<legend>{{ title }}</legend>
+				    <!-- title of form -->
+				    <legend>{{ title }}</legend>
 
+				    <!-- profile pixture and update button -->
+				    <div class="box profile_pic">
+				    	<img src="{{ image_file }}" style="width:100%">	
+				    </div>
+				</div>
+
+				<div class="two-thirds column user_posts" style="margin-top: 7rem">
 					<!-- name field label -->
 					{{ form.name.label() }}
 
@@ -40,11 +49,26 @@
 					<!-- email field input -->
 					{{ form.email(class='u-full-width')}}
 
+					<!-- image file label -->
+			    	{{ form.image_file.label() }}
+
+			    	<!-- image file validations -->
+			    	{% if form.image_file.errors %}
+			    		<div class='message negative' style="padding: 1rem;">
+				    		{% for error in form.image_file.errors %}
+				    			<p>{{ error }}</p>
+				    		{% endfor %}
+						</div>
+			    	{% endif %}
+
+			    	<!-- image file selection button -->
+			    	{{ form.image_file() }}
+
 					<br><br>
 					{{ form.submit(class='button-primary') }}
-				</form>
+				</div>
 			</div>
-		</div>
+		</form>
 	</section>
 
 {% endblock content %} 

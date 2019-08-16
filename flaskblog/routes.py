@@ -1,3 +1,12 @@
+# for generating random file names for renaming uploaded files
+import secrets
+
+# for obtaining the extension of uploaded files
+import os
+
+# resize images with Pillow
+from PIL import Image
+
 # routes specific imports
 from flask import render_template, url_for, flash, redirect, request
 
@@ -141,6 +150,35 @@ def profile():
     return render_template('profile.html', title='Profile', image_file=image_file , posts=posts)
 
 
+# save pictures. NOT a route function
+def save_image( form_picture ):
+    # need to set random hex as file name to avoid conflicts
+    random_hex = secrets.token_hex(8)
+
+    # get the extension of uploaded file
+    # underscore means we ignore the first value returned 
+    _, file_ext = os.path.splitext( form_picture.filename )
+
+    # new file name for uploaded file
+    final_file_name = random_hex + file_ext
+
+    # address for saving file
+    final_file_path = os.path.join( app.root_path, 'static/profile_pictures', final_file_name )
+
+    # resize the image 
+    output_size = ( 250, 250 )
+    i = Image.open(form_picture)
+    i.thumbnail(output_size)
+
+    # save the image the the final path
+    i.save(final_file_path)
+
+    # delete the old profile picture
+    # TODO    
+
+    # return the new file name for saving the DB
+    return final_file_name
+
 # profile settings page
 @app.route('/profile/settings', methods=[ 'GET', 'POST'])
 @login_required
@@ -148,6 +186,11 @@ def profile_settings():
     form = ProfileSettingsForm()
 
     if form.validate_on_submit():
+        if form.image_file.data:
+            new_file_name = save_image( form.image_file.data )
+            # update current user's profile pic in DB
+            current_user.image_file = new_file_name
+
         current_user.name = form.name.data
         current_user.email = form.email.data
         # save the settings to db
