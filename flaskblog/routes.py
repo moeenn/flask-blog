@@ -5,7 +5,7 @@ from flask import render_template, url_for, flash, redirect, request
 from flaskblog import app, db, bcrypt
 
 # import forms
-from flaskblog.forms import RegistrationForm, LoginForm, RecoverAccount
+from flaskblog.forms import RegistrationForm, LoginForm, RecoverAccount, ProfileSettingsForm
 
 # import the models for tables
 from flaskblog.models import User, Post
@@ -102,7 +102,7 @@ def login():
         if user and bcrypt.check_password_hash( user.password, form.password.data ):
             login_user( user, remember = form.remember.data )
             flash(f'Login Successful.', 'positive')
-            return redirect(next_page) if next_page else redirect( url_for('home') )
+            return redirect( url_for('home') )
             
         else:
             flash(f'Login Unsuccessful. Please check email and password', 'negative')            
@@ -137,10 +137,34 @@ def recover_account():
 @app.route('/profile')
 @login_required
 def profile():
-    return render_template('profile.html', title='Profile', posts=posts )
+    image_file = url_for('static', filename=f'profile_pictures/{current_user.image_file}')
+    return render_template('profile.html', title='Profile', image_file=image_file , posts=posts)
+
+
+# profile settings page
+@app.route('/profile/settings', methods=[ 'GET', 'POST'])
+@login_required
+def profile_settings():
+    form = ProfileSettingsForm()
+
+    if form.validate_on_submit():
+        current_user.name = form.name.data
+        current_user.email = form.email.data
+        # save the settings to db
+        db.session.commit()
+        flash('Settings Updated Successfully', 'positive')
+        return redirect( url_for('profile') )
+
+    # set the placeholders for the input fields
+    elif request.method == 'GET':
+        form.name.data = current_user.name
+        form.email.data = current_user.email
+
+    image_file = url_for('static', filename=f'profile_pictures/{current_user.image_file}')
+    return render_template('profile_settings.html', title='Profile Settings', image_file=image_file, form=form)
 
 
 # article page
 @app.route('/article')
 def article():
-    return render_template('article.html', title='Article' ) 
+    return render_template('article.html', title='Article') 

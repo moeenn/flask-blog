@@ -5,10 +5,12 @@
 		<div class="container">
 			<div class="one-third column user_details">
 				<div class="box profile_pic">
-					<img src="{{ url_for('static', filename='images/avatar.png')}}" style="width:100%">	
+					<img src="{{ image_file }}" style="width:100%">	
 				</div>
 				<div>
 					<h5>{{ current_user.name.title() }}</h5>
+					<small>{{ current_user.email }}</small>
+					<br>
 					<small>4 Posts</small>
 				</div>
 			</div>

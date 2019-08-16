@@ -1,0 +1,50 @@
+{% extends 'layout.html' %} 
+{% block content %} 
+
+	<section class="section profile">
+		<div class="container" style="margin-top: 3rem;">
+			<div class="one-half column">
+				<form action="{{ url_for('register') }}" method="POST">
+					<!-- add the CSRF token -->
+					{{ form.hidden_tag() }}
+
+					<legend>{{ title }}</legend>
+
+					<!-- name field label -->
+					{{ form.name.label() }}
+
+					<!-- handle errors -->
+					{% if form.name.errors %}
+						<div class='message negative' style="padding: 1rem;">
+							{% for error in form.name.errors %}
+								<p>{{ error }}</p>
+							{% endfor %}
+						</div>					
+					{% endif %}
+
+					<!-- name field input -->
+					{{ form.name(class='u-full-width') }}
+
+					<!-- email field label -->
+					{{ form.email.label() }}
+
+					<!-- handle errors -->
+					{% if form.email.errors %}
+						<div class='message negative' style="padding: 1rem;">
+							{% for error in form.email.errors %}
+								<p>{{ error }}</p>
+							{% endfor %}
+						</div>					
+					{% endif %}
+
+					<!-- email field input -->
+					{{ form.email(class='u-full-width')}}
+
+					<br><br>
+					{{ form.submit(class='button-primary') }}
+				</form>
+			</div>
+		</div>
+	</section>
+
+{% endblock content %} 

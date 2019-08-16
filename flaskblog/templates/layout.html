@@ -27,6 +27,7 @@
  				<a {% if request.path == '/about' %} class="active" {% endif %} href=" {{ url_for('about') }}">About</a>
  				{% if current_user.is_authenticated %}
 	 				<a {% if request.path == '/profile' %} class="active" {% endif %} href="{{ url_for('profile') }}">Profile</a>
+	 				<a {% if request.path == '/profile/settings' %} class="active" {% endif %} href="{{ url_for('profile_settings') }}">Settings</a>
  					<a href="{{ url_for('logout') }}">Logout</a>
  				{% else %}
 	 				<a {% if request.path == '/login' %} class="active" {% endif %} href=" {{ url_for('login') }}">Login</a>		

@@ -1,5 +1,6 @@
 # file: forms.py
 from flask_wtf import FlaskForm 
+from flask_login import current_user
 from wtforms import StringField, PasswordField, SubmitField, BooleanField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from flaskblog.models import User
@@ -48,3 +49,26 @@ class LoginForm(FlaskForm):
 class RecoverAccount(FlaskForm):
     email = StringField('Email', validators=[ DataRequired(), Email() ])
     submit = SubmitField('Submit')
+
+
+# update profile settings form
+class ProfileSettingsForm(FlaskForm):
+    name = StringField('Name', 
+                           validators=[ DataRequired(), Length( min = 2, max=20 )])
+    
+    email = StringField( 'Email', 
+                            validators=[ DataRequired(), Email() ])
+
+    submit = SubmitField('Save Changes')
+    
+    def validate_name(self, name):
+        if name.data != current_user.name:
+            user = User.query.filter_by( name = name.data ).first()
+            if user:
+                raise ValidationError('This User Name is taken. Please try another one.')
+    
+    def validate_email(self, email):
+        if email.data != current_user.email:
+            user = User.query.filter_by( email = email.data ).first()
+            if user:
+                raise ValidationError('This Email address has been taken. Please use another one.')
