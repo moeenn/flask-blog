@@ -1,0 +1,50 @@
+{% extends 'layout.html' %}
+{% block content %}
+	<section class="section new_article">
+		<div class="container" style="margin-top: 2rem;">
+			<!-- blank action means submit to current page -->
+			<form action="" method="POST">
+				<!-- set the CSRF Token -->
+				{{ form.hidden_tag() }}
+
+
+				<!-- form heading -->
+				<legend>{{ title }}</legend>
+
+				<!-- article title label -->
+				{{ form.title.label() }}
+
+				<!-- title validators -->
+				{% if form.title.errors %}
+					<div class='message negative' style="padding: 1rem;">
+						{% for error in form.title.errors %}
+							<p>{{ error }}</p>
+						{% endfor %}
+					</div>
+				{% endif %}
+
+				<!-- title input field -->
+				{{ form.title( class="u-full-width" ) }}
+
+				<!-- article content field -->
+				{{ form.content.label() }}
+
+				<!-- article content errors -->
+				{% if form.content.errors %}
+					<div class='message negative' style="padding: 1rem;">
+						{% for error in form.content.errors %}
+							<p>{{ error }}</p>
+						{% endfor %}
+					</div>
+				{% endif %}				
+
+				<!-- article content input box -->
+				{{ form.content( class="u-full-width", style="height: 50vh" ) }}
+
+				<!-- submit button -->
+				{{ form.submit( class="button-primary" ) }}
+
+			</form>
+		</div>		
+	</section> 
+{% endblock content %}

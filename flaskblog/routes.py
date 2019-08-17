@@ -8,13 +8,13 @@ import os
 from PIL import Image
 
 # routes specific imports
-from flask import render_template, url_for, flash, redirect, request
+from flask import render_template, url_for, flash, redirect, request, abort
 
 # import the objects from __init__.py
 from flaskblog import app, db, bcrypt
 
 # import forms
-from flaskblog.forms import RegistrationForm, LoginForm, RecoverAccount, ProfileSettingsForm
+from flaskblog.forms import RegistrationForm, LoginForm, RecoverAccount, ProfileSettingsForm, ArticleForm
 
 # import the models for tables
 from flaskblog.models import User, Post
@@ -23,39 +23,12 @@ from flaskblog.models import User, Post
 from flask_login import login_user, current_user, logout_user, login_required
 
 
-# dummy data
-posts = [
-    {
-      'author': 'Carl Sagan', 
-      'title': 'Pale Blue Dot', 
-      'content': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam ...',
-      'date':'June 30, 1990'
-    },
-    {
-      'author': 'Neil Tyson', 
-      'title': 'String Theory', 
-      'content': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam ...',
-      'date':'February 15, 2003'
-    },
-    {
-      'author': 'Michio Kaku', 
-      'title': 'Soap Bubble Universe', 
-      'content': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam ...',
-      'date':'November 27, 2009'
-    },
-    {
-      'author': 'Max Tedmark', 
-      'title': 'AI - The Last Invention of Man', 
-      'content': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam ...',
-      'date':'April 10, 2016'
-    }    
-]
-
 
 # define the homepage
 @app.route('/')
 @app.route('/home')
 def home():
+    posts = Post.query.all()
     return render_template('home.html', posts=posts)
     
     
@@ -142,12 +115,16 @@ def recover_account():
     return render_template('recover_account.html', title='Recover Account', form=form)
 
 
-# user profile page
-@app.route('/profile')
-@login_required
-def profile():
-    image_file = url_for('static', filename=f'profile_pictures/{current_user.image_file}')
-    return render_template('profile.html', title='Profile', image_file=image_file , posts=posts)
+# profile page
+@app.route('/profile/<int:user_id>')
+def profile(user_id):
+    user = User.query.get_or_404(user_id)
+
+    # user posts
+    posts = user.posts
+
+    image_file = url_for('static', filename=f'profile_pictures/{user.image_file}')
+    return render_template('profile.html', title='Profile', image_file=image_file , posts=posts, user=user)
 
 
 # save pictures. NOT a route function
@@ -156,6 +133,7 @@ def save_image( form_picture ):
     random_hex = secrets.token_hex(8)
 
     # get the extension of uploaded file
+    # splitext() returns filename and fileext
     # underscore means we ignore the first value returned 
     _, file_ext = os.path.splitext( form_picture.filename )
 
@@ -165,18 +143,20 @@ def save_image( form_picture ):
     # address for saving file
     final_file_path = os.path.join( app.root_path, 'static/profile_pictures', final_file_name )
 
-    # resize the image 
+    # resize the image (using Pillow module)
     output_size = ( 250, 250 )
     i = Image.open(form_picture)
+    i = i.crop(( 0, 0, min(i.size), min(i.size) ))
     i.thumbnail(output_size)
 
-    # save the image the the final path
+    # save the image the the final path (save method from Pillow)
     i.save(final_file_path)
 
     # delete the old profile picture
-    # TODO    
+    old_file_path = os.path.join( app.root_path, 'static/profile_pictures', current_user.image_file )
+    os.remove(old_file_path)
 
-    # return the new file name for saving the DB
+    # return the new file name for saving in the DB
     return final_file_name
 
 # profile settings page
@@ -208,6 +188,68 @@ def profile_settings():
 
 
 # article page
-@app.route('/article')
-def article():
-    return render_template('article.html', title='Article') 
+# accept the id from the url
+@app.route('/article/<int:post_id>')
+def article(post_id):
+    # if the requested post doesn't exist, return 404
+    post = Post.query.get_or_404(post_id)
+    return render_template('article.html', title=post.title, post=post) 
+
+
+# create new article
+@app.route('/article/new_article', methods=[ 'GET', 'POST'])
+@login_required
+def new_article():
+    form = ArticleForm()
+
+    if form.validate_on_submit():
+        post = Post( title=form.title.data, content=form.content.data, author=current_user)
+        db.session.add(post)
+        db.session.commit()
+
+        flash('The Article has been posted Successfully', 'positive')
+        return redirect( url_for('home') )
+
+    return render_template('create_update_article.html', title='New Article', form=form)
+
+
+# update article
+@app.route('/article/<int:post_id>/update', methods=['GET', 'POST'])
+@login_required
+def update_article(post_id):
+    post = Post.query.get_or_404(post_id)
+
+    if post.user_id != current_user.id:
+        # imported from Flask. 403 = Access Denied
+        abort(403)
+    else:
+        form = ArticleForm()
+
+        if form.validate_on_submit():
+            post.title = form.title.data
+            post.content = form.content.data
+            db.session.commit()
+
+            flash('Article Updated Successfully', 'positive')
+            return redirect( url_for('article', post_id=post.id) )
+
+        elif request.method == 'GET':
+            # set the placeholders for the input fields
+            form.title.data = post.title
+            form.content.data = post.content
+
+    return render_template('create_update_article.html', title='Update Article', form=form)
+
+# delete posts
+@app.route('/article/<int:post_id>/delete')
+@login_required
+def delete_article(post_id):
+    post = Post.query.get_or_404(post_id)
+
+    if post.author != current_user:
+        abort(403)
+    else:
+        db.session.delete(post)
+        db.session.commit()
+        flash('Article has been deleted Successfully', 'positive')
+        return redirect( url_for('profile', user_id=current_user.id) )

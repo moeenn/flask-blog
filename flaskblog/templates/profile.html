@@ -8,9 +8,10 @@
 					<img src="{{ image_file }}" style="width:100%">	
 				</div>
 				<div>
-					<h5>{{ current_user.name.title() }}</h5>
-					<small>{{ current_user.email }}</small>
+					<h5>{{ user.name }}</h5>
+					<small>{{ user.email }}</small>
 					<br>
+					<!-- TODO: change according to context -->
 					<small>4 Posts</small>
 				</div>
 			</div>
@@ -18,12 +19,12 @@
 			<div class="two-thirds column user_posts">
 				{% for post in posts %}
 					<div class="box">
-						<h4>{{ post.get('title') }}</h4>
-						<small>Author: <i><a href="{{ url_for('profile') }}">{{ post.get('author')}}</a></i> on <i><a href="#">{{ post.get('date')}}</a></i></small>
+						<h4>{{ post.title }}</h4>
+						<small>Author: <i><a href="{{ url_for('profile', user_id=post.author.id) }}">{% if post.author == current_user %}You{% else %}{{ post.author.name }}{% endif %}</a></i> on <i><a href="#">{{ post.date_posted.strftime('%B %d, %Y') }}</a></i></small>
 						<hr>
-						<p>{{ post.get('content') }}</p>
+						<p>{{ post.content }}</p>
 						<br>
-						<a href="{{ url_for('article') }}">Read More</a>
+						<a href="{{ url_for('article', post_id=post.id) }}">Read More</a>
 					</div>
 				{% endfor %}
 			</div>
