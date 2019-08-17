@@ -123,8 +123,11 @@ def profile(user_id):
     # user posts
     posts = user.posts
 
+    # number of posts
+    total_posts = len(posts)
+
     image_file = url_for('static', filename=f'profile_pictures/{user.image_file}')
-    return render_template('profile.html', title='Profile', image_file=image_file , posts=posts, user=user)
+    return render_template('profile.html', title='Profile', image_file=image_file , posts=posts, total_posts=total_posts, user=user)
 
 
 # save pictures. NOT a route function
@@ -208,7 +211,7 @@ def new_article():
         db.session.commit()
 
         flash('The Article has been posted Successfully', 'positive')
-        return redirect( url_for('home') )
+        return redirect( url_for('article', post_id=post.id) )
 
     return render_template('create_update_article.html', title='New Article', form=form)
 
