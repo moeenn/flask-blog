@@ -36,7 +36,7 @@ nav .active {
 }
 
 /* switch to mobile at 750px */
-@media (max-width: 750px) {
+@media (max-width: 400px) {
 	nav div {
 		display: block;
 		position: absolute;
@@ -117,16 +117,22 @@ td:last-child {
 	border: solid 1px #bbb;
 	border-radius: 4px;
 	overflow: hidden;
+	font-size: 0px;
 }
 
 .pages a {
+	font-size: 1.5rem;
 	display: inline-block;
 	border-radius: 0px;
 	padding: 0 1rem;
 }
 
 .pages a:hover {
-	background: rgba(0,0,0,0.1);
+	background: rgba(0,0,0,0.03);
+}
+
+.pages .active {
+	background: rgba(0,0,0,0.07);
 }
 
 /* messages */

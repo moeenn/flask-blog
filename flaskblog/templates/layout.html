@@ -27,7 +27,7 @@
  				<a {% if request.path == url_for('about') %} class="active" {% endif %} href=" {{ url_for('about') }}">About</a>
  				{% if current_user.is_authenticated %}
  					<a {% if request.path == url_for('new_article') %} class="active" {% endif %} href="{{ url_for('new_article') }}">New Article</a>
-	 				<a {% if request.path == url_for('profile', user_id=current_user.id) %} class="active" {% endif %} href="{{ url_for('profile', user_id=current_user.id) }}">Profile</a>
+	 				<a {% if request.path == url_for('profile', username=current_user.name) %} class="active" {% endif %} href="{{ url_for('profile', username=current_user.name) }}">Profile</a>
 	 				<a {% if request.path == url_for('profile_settings') %} class="active" {% endif %} href="{{ url_for('profile_settings') }}">Settings</a>
  					<a href="{{ url_for('logout') }}">Logout</a>
  				{% else %}

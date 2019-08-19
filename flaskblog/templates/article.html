@@ -4,7 +4,7 @@
 		<div class="container" style="margin-top: 5rem;">
 			<h3>{{ post.title.title() }}</h3>
 
-			<small>Author: <i><a href="{{ url_for('profile', user_id=post.user_id) }}">{% if post.author.name == current_user.name %}You{% else %}{{ post.author.name }}{% endif %}</a></i></small>
+			<small>Author: <i><a href="{{ url_for('profile', username=post.author.name) }}">{% if post.author.name == current_user.name %}You{% else %}{{ post.author.name }}{% endif %}</a></i></small>
 			<br>
 			<small>Published: <i><a href="#">{{ post.date_posted.strftime('%B %d, %Y') }}</a></i></small>
 			<br><br>

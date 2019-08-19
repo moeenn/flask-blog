@@ -22,13 +22,17 @@ from flaskblog.models import User, Post
 # user login 
 from flask_login import login_user, current_user, logout_user, login_required
 
-
-
 # define the homepage
 @app.route('/')
 @app.route('/home')
 def home():
-    posts = Post.query.all()
+    # get the current page number from URL
+    # format: get( argName, defaultValue, argDataType )
+    page_num = request.args.get('page', 1, type=int)
+
+    # paginate the posts, 5 posts per page
+    # order is descending order i.e. newest posts first
+    posts = Post.query.order_by(Post.date_posted.desc()).paginate( page = page_num, per_page = 5)
     return render_template('home.html', posts=posts)
     
     
@@ -116,18 +120,21 @@ def recover_account():
 
 
 # profile page
-@app.route('/profile/<int:user_id>')
-def profile(user_id):
-    user = User.query.get_or_404(user_id)
+@app.route('/profile/<username>')
+def profile(username):
+    user = User.query.filter_by(name=username).first_or_404()
 
-    # user posts
-    posts = user.posts
+    # get the page number
+    page_num = request.args.get('page', 1, type=int )
+
+    # user posts, latest first i.e. descending order, paginated 
+    posts = Post.query.filter_by( user_id=user.id ).order_by(Post.date_posted.desc()).paginate( page=page_num, per_page=5 )
 
     # number of posts
-    total_posts = len(posts)
+    # total_posts = len(posts)
 
     image_file = url_for('static', filename=f'profile_pictures/{user.image_file}')
-    return render_template('profile.html', title='Profile', image_file=image_file , posts=posts, total_posts=total_posts, user=user)
+    return render_template('profile.html', title='Profile', image_file=image_file , posts=posts, user=user)
 
 
 # save pictures. NOT a route function
