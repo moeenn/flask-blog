@@ -88,7 +88,7 @@ def login():
         if user and bcrypt.check_password_hash( user.password, form.password.data ):
             login_user( user, remember = form.remember.data )
             flash(f'Login Successful.', 'positive')
-            return redirect( url_for('home') )
+            return redirect( url_for('profile', username=user.name) )
             
         else:
             flash(f'Login Unsuccessful. Please check email and password', 'negative')            
@@ -120,7 +120,7 @@ def recover_account():
 
 
 # profile page
-@app.route('/profile/<username>')
+@app.route('/profile/<string:username>')
 def profile(username):
     user = User.query.filter_by(name=username).first_or_404()
 
@@ -129,9 +129,6 @@ def profile(username):
 
     # user posts, latest first i.e. descending order, paginated 
     posts = Post.query.filter_by( user_id=user.id ).order_by(Post.date_posted.desc()).paginate( page=page_num, per_page=5 )
-
-    # number of posts
-    # total_posts = len(posts)
 
     image_file = url_for('static', filename=f'profile_pictures/{user.image_file}')
     return render_template('profile.html', title='Profile', image_file=image_file , posts=posts, user=user)
