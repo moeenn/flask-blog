@@ -51,6 +51,22 @@ class RecoverAccount(FlaskForm):
     email = StringField('Email', validators=[ DataRequired(), Email() ])
     submit = SubmitField('Submit')
 
+    def validate_email(self, email):
+        user = User.query.filter_by(email = email.data ).first()
+        if user is None:
+            raise ValidationError('There is no account with this email. You must register first.')
+
+
+# form for entering the new passwords 
+class RecoverAccountPassword(FlaskForm):
+    password = PasswordField('Password', 
+                            validators=[ DataRequired(), Length(min=8) ])
+    
+    confirm_password = PasswordField('Confirm Password', 
+                            validators=[ DataRequired(), Length(min=8), EqualTo('password') ])
+
+    submit = SubmitField('Update Password')  
+
 
 # update profile settings form
 class ProfileSettingsForm(FlaskForm):

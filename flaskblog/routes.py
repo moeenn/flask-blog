@@ -11,16 +11,19 @@ from PIL import Image
 from flask import render_template, url_for, flash, redirect, request, abort
 
 # import the objects from __init__.py
-from flaskblog import app, db, bcrypt
+from flaskblog import app, db, bcrypt, mail
 
 # import forms
-from flaskblog.forms import RegistrationForm, LoginForm, RecoverAccount, ProfileSettingsForm, ArticleForm
+from flaskblog.forms import RegistrationForm, LoginForm, RecoverAccount, ProfileSettingsForm, ArticleForm, RecoverAccountPassword
 
 # import the models for tables
 from flaskblog.models import User, Post
 
 # user login 
 from flask_login import login_user, current_user, logout_user, login_required
+
+# message class from the flask_mail module
+from flask_mail import Message
 
 # define the homepage
 @app.route('/')
@@ -102,6 +105,23 @@ def logout():
     logout_user()
     return redirect( url_for('home') )
 
+# send the password reset email with link to reset the password
+# the reset token will be part of the URL
+def send_reset_email(user):
+    # generate the token for the provided user
+    token = user.get_reset_token()
+    # message headers i.e. Subject, sender and the recipients
+    msg = Message('Password Reset Request', sender='noreply@demo.com', recipients=[user.email])
+
+    # _external=True is an argument for the url_for() function
+    # it means that the generated URL will be absolute rather than relative (defaut)
+    msg.body = f'''To reset your Password, visit the following link:
+{url_for('recover_account_password', token=token, _external=True)}
+
+If you did not request to change your password, simply ignore this email and no changes will be made.
+'''
+    # send the actual email
+    mail.send(msg)
 
 # account recovery page
 @app.route('/recover_account', methods=[ 'GET', 'POST'])
@@ -113,10 +133,39 @@ def recover_account():
     form = RecoverAccount()
     
     if form.validate_on_submit():
-        flash(f'Your request for account recovery has been submitted.', 'positive')
-        return redirect( url_for('home') )
+        user = User.query.filter_by( email = form.email.data ).first()
+        send_reset_email(user)
+
+        flash(f'An email has been sent with the instructions to reset the Password.', 'info')
+        return redirect( url_for('login') )
     
     return render_template('recover_account.html', title='Recover Account', form=form)
+
+
+# set the new passwords after recovery
+# get the reset token from the user as argument
+@app.route('/recover_account/update_password/<string:token>', methods=['GET', 'POST'] )
+def recover_account_password(token):
+    # redirect to home if user already logged in
+    if current_user.is_authenticated:
+        return redirect( url_for('home') )
+
+    # verify the token. If valid, user is returned, else None is returned
+    user = User.verify_reset_token(token)
+    if user is None:
+        flash('The Token is invalid or has expired.', 'negative')
+        return redirect( url_for('recover_account') )
+    else:
+        form = RecoverAccountPassword()
+
+        if form.validate_on_submit():
+            hashed_password = bcrypt.generate_password_hash( form.password.data ).decode('utf-8')
+            user.password = hashed_password
+            db.session.commit()
+            flash('Your Password has been Updated Successfully. You can now log in with the new Password', 'positive')
+            return redirect('login')
+
+    return render_template('recover_account_password.html', title='Reset Password', form=form)
 
 
 # profile page
