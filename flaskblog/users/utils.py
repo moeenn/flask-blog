@@ -32,8 +32,9 @@ def save_image( form_picture ):
     i.save(final_file_path)
 
     # delete the old profile picture
-    old_file_path = os.path.join( current_app.root_path, 'static/profile_pictures', current_user.image_file )
-    os.remove(old_file_path)
+    if current_user.image_file != 'avatar.png':
+	    old_file_path = os.path.join( current_app.root_path, 'static/profile_pictures', current_user.image_file )
+	    os.remove(old_file_path)
 
     # return the new file name for saving in the DB
     return final_file_name
