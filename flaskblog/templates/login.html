@@ -5,7 +5,7 @@
 		<div class="container">
 			<div class="one-half column">
 				<h3>{{ title }}</h3>
-				<form action="{{ url_for('login') }}" method="POST">
+				<form action="{{ url_for('users.login') }}" method="POST">
 					<!-- set the CSRF token -->
 					{{ form.hidden_tag() }}
 
@@ -54,7 +54,7 @@
 				</form>						
 
 				<!-- login button -->
-				<p>Forgot Password?  <a href="{{ url_for('recover_account')}}">Recover Account</a></p>
+				<p>Forgot Password?  <a href="{{ url_for('users.recover_account')}}">Recover Account</a></p>
 
 			</div>
 		</div>

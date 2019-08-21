@@ -22,11 +22,11 @@
 				{% for post in posts.items %}
 					<div class="box">
 						<h4>{{ post.title }}</h4>
-						<small>Author: <i><a href="{{ url_for('profile', username=post.author.name) }}">{% if post.author == current_user %}You{% else %}{{ post.author.name }}{% endif %}</a></i> on <i><a href="#">{{ post.date_posted.strftime('%B %d, %Y') }}</a></i></small>
+						<small>Author: <i><a href="{{ url_for('users.profile', username=post.author.name) }}">{% if post.author == current_user %}You{% else %}{{ post.author.name }}{% endif %}</a></i> on <i><a href="#">{{ post.date_posted.strftime('%B %d, %Y') }}</a></i></small>
 						<hr>
 						<p>{{ post.content }}</p>
 						<br>
-						<a href="{{ url_for('article', post_id=post.id) }}">Read More</a>
+						<a href="{{ url_for('posts.article', post_id=post.id) }}">Read More</a>
 					</div>
 				{% endfor %}
 
@@ -35,9 +35,9 @@
 					{% for page_num in posts.iter_pages( left_edge=1, right_edge=1, left_current=1, right_current=2) %}
 						{% if page_num %}
 							{% if posts.page == page_num %}
-								<a class="active" href="{{ url_for('profile', username=user.name, page=page_num) }}">{{page_num}}</a>
+								<a class="active" href="{{ url_for('users.profile', username=user.name, page=page_num) }}">{{page_num}}</a>
 							{% else %}
-								<a href="{{ url_for('profile', username=user.name, page=page_num) }}">{{page_num}}</a>	
+								<a href="{{ url_for('users.profile', username=user.name, page=page_num) }}">{{page_num}}</a>	
 							{% endif %}
 						{% else %}
 							<a href="#">..</a>

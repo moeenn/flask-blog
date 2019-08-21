@@ -23,16 +23,16 @@
  	<section class="section sticky navigation">
  		<div class="container">
  			<nav>
- 				<a {% if request.path in url_for('home') %} class="active" {% endif %} href="{{ url_for('home') }}">Home</a>
- 				<a {% if request.path == url_for('about') %} class="active" {% endif %} href=" {{ url_for('about') }}">About</a>
+ 				<a {% if request.path in url_for('main.home') %} class="active" {% endif %} href="{{ url_for('main.home') }}">Home</a>
+ 				<a {% if request.path == url_for('main.about') %} class="active" {% endif %} href=" {{ url_for('main.about') }}">About</a>
  				{% if current_user.is_authenticated %}
- 					<a {% if request.path == url_for('new_article') %} class="active" {% endif %} href="{{ url_for('new_article') }}">New Article</a>
-	 				<a {% if request.path == url_for('profile', username=current_user.name) %} class="active" {% endif %} href="{{ url_for('profile', username=current_user.name) }}">Profile</a>
-	 				<a {% if request.path == url_for('profile_settings') %} class="active" {% endif %} href="{{ url_for('profile_settings') }}">Settings</a>
- 					<a href="{{ url_for('logout') }}">Logout</a>
+ 					<a {% if request.path == url_for('posts.new_article') %} class="active" {% endif %} href="{{ url_for('posts.new_article') }}">New Article</a>
+	 				<a {% if request.path == url_for('users.profile', username=current_user.name) %} class="active" {% endif %} href="{{ url_for('users.profile', username=current_user.name) }}">Profile</a>
+	 				<a {% if request.path == url_for('users.profile_settings') %} class="active" {% endif %} href="{{ url_for('users.profile_settings') }}">Settings</a>
+ 					<a href="{{ url_for('users.logout') }}">Logout</a>
  				{% else %}
-	 				<a {% if request.path == url_for('login') %} class="active" {% endif %} href=" {{ url_for('login') }}">Login</a>		
-	 				<a {% if request.path == url_for('register') %} class="active" {% endif %} href=" {{ url_for('register') }} ">Register</a>
+	 				<a {% if request.path == url_for('users.login') %} class="active" {% endif %} href=" {{ url_for('users.login') }}">Login</a>		
+	 				<a {% if request.path == url_for('users.register') %} class="active" {% endif %} href=" {{ url_for('users.register') }} ">Register</a>
  				{% endif %}
  			</nav>
  		</div>

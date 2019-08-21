@@ -5,7 +5,7 @@
 		<div class="container">
 			<div class="one-half column">
 				<h3>{{ title }}</h3>
-				<form action="{{ url_for('register') }}" method="POST">
+				<form action="{{ url_for('users.register') }}" method="POST">
 					<!-- add the CSRF token -->
 					{{ form.hidden_tag() }}
 
@@ -75,7 +75,7 @@
 					{{ form.submit(class='button-primary') }}
 
 					<!-- login button -->
-					<p>Already Have an Account?  <a href="{{ url_for('login')}}">Login</a></p>
+					<p>Already Have an Account?  <a href="{{ url_for('users.login')}}">Login</a></p>
 				</form>						
 			</div>
 		</div>
