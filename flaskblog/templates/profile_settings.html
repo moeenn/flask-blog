@@ -1,5 +1,5 @@
-{% extends 'layout.html' %} 
-{% block content %} 
+{% extends 'layout.html' %}
+{% block content %}
 
 	<section class="section profile">
 		<div class="container">
@@ -9,66 +9,74 @@
 				    <!-- add the CSRF token -->
 					{{ form.hidden_tag() }}
 
-				    <!-- title of form -->
-				    <legend>{{ title }}</legend>
-
 				    <!-- profile pixture and update button -->
-				    <div class="box profile_pic">
-				    	<img src="{{ image_file }}" style="width:100%">	
+				    <div class="profile_pic margin-vertical-4">
+				    	<img src="{{ image_file }}" style="width:100%">
 				    </div>
 				</div>
 
-				<div class="two-thirds column user_posts" style="margin-top: 7rem">
-					<!-- name field label -->
-					{{ form.name.label() }}
+				<div class="two-thirds column user_posts">
+				    <!-- title of form -->
+				    <h3 style="margin-top: 1.4rem;">{{ title }}</h3>
 
-					<!-- handle errors -->
-					{% if form.name.errors %}
-						<div class='message negative' style="padding: 1rem;">
+					<fieldset {% if form.name.errors %}class="input-error"{% endif %}>
+						<!-- name field label -->
+						{{ form.name.label() }}
+
+						<!-- name field input -->
+						{{ form.name() }}
+
+						<!-- handle errors -->
+						{% if form.name.errors %}
 							{% for error in form.name.errors %}
 								<p>{{ error }}</p>
 							{% endfor %}
-						</div>					
-					{% endif %}
+						{% else %}
+							<p>Update your User name</p>
+						{% endif %}
+					</fieldset>
 
-					<!-- name field input -->
-					{{ form.name(class='u-full-width') }}
+					<fieldset {% if form.email.errors %}class="input-error"{% endif %}>
+						<!-- email field label -->
+						{{ form.email.label() }}
 
-					<!-- email field label -->
-					{{ form.email.label() }}
+						<!-- email field input -->
+						{{ form.email()}}
 
-					<!-- handle errors -->
-					{% if form.email.errors %}
-						<div class='message negative' style="padding: 1rem;">
+						<!-- handle errors -->
+						{% if form.email.errors %}
 							{% for error in form.email.errors %}
 								<p>{{ error }}</p>
 							{% endfor %}
-						</div>					
-					{% endif %}
+						{% else %}
+							<p>Update your Email Address</p>
+						{% endif %}
+					</fieldset>
 
-					<!-- email field input -->
-					{{ form.email(class='u-full-width')}}
+					<fieldset {% if form.image_file.errors %}class="input-error"{% endif %}>
+						<!-- image file label -->
+				    	{{ form.image_file.label() }}
 
-					<!-- image file label -->
-			    	{{ form.image_file.label() }}
+				    	<!-- image file selection button -->
+				    	{{ form.image_file() }}
 
-			    	<!-- image file validations -->
-			    	{% if form.image_file.errors %}
-			    		<div class='message negative' style="padding: 1rem;">
+				    	<!-- image file validations -->
+				    	{% if form.image_file.errors %}
 				    		{% for error in form.image_file.errors %}
 				    			<p>{{ error }}</p>
 				    		{% endfor %}
-						</div>
-			    	{% endif %}
+				    	{% else %}
+				    		<p>Choose a profile picture for your account</p>
+				    	{% endif %}
+					</fieldset>
 
-			    	<!-- image file selection button -->
-			    	{{ form.image_file() }}
-
-					<br><br>
-					{{ form.submit(class='button-primary') }}
+					<!-- submit button -->
+					<div class="margin-vertical-4">
+						{{ form.submit(class='button-primary') }}
+					</div>
 				</div>
 			</div>
 		</form>
 	</section>
 
-{% endblock content %} 
+{% endblock content %}

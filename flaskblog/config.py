@@ -7,7 +7,7 @@ class Config:
 	SECRET_KEY = 'e48b6e01762d0335a47e2b9cdaa389c8'
 
 	# set location of the database
-	SQLALCHEMY_DATABASE_URI = 'sqlite:///site.db'
+	SQLALCHEMY_DATABASE_URI = 'sqlite:///database/site.db'
 
 	# mail related configurations
 	MAIL_SERVER = 'smtp.office365.com'

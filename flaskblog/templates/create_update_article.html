@@ -1,50 +1,50 @@
 {% extends 'layout.html' %}
 {% block content %}
 	<section class="section new_article">
-		<div class="container" style="margin-top: 2rem;">
+		<div class="container">
 			<!-- blank action means submit to current page -->
 			<form action="" method="POST">
 				<!-- set the CSRF Token -->
 				{{ form.hidden_tag() }}
 
-
 				<!-- form heading -->
-				<legend>{{ title }}</legend>
+				<h3>{{ title }}</h3>
 
-				<!-- article title label -->
-				{{ form.title.label() }}
+				<fieldset {% if form.title.errors %}class="input-error"{% endif %}>
+					<!-- article title label -->
+					{{ form.title.label() }}
 
-				<!-- title validators -->
-				{% if form.title.errors %}
-					<div class='message negative' style="padding: 1rem;">
+					<!-- title input field -->
+					{{ form.title() }}
+
+					<!-- title validators -->
+					{% if form.title.errors %}
 						{% for error in form.title.errors %}
 							<p>{{ error }}</p>
 						{% endfor %}
-					</div>
-				{% endif %}
+					{% endif %}
+				</fieldset>
 
-				<!-- title input field -->
-				{{ form.title( class="u-full-width" ) }}
+				<fieldset {% if form.content.errors %}class="input-error"{% endif %}>
+					<!-- article content field -->
+					{{ form.content.label() }}
 
-				<!-- article content field -->
-				{{ form.content.label() }}
+					<!-- article content input box -->
+					{{ form.content( style="height: 50vh" ) }}
 
-				<!-- article content errors -->
-				{% if form.content.errors %}
-					<div class='message negative' style="padding: 1rem;">
+					<!-- article content errors -->
+					{% if form.content.errors %}
 						{% for error in form.content.errors %}
 							<p>{{ error }}</p>
 						{% endfor %}
-					</div>
-				{% endif %}				
+					{% endif %}
+				</fieldset>
 
-				<!-- article content input box -->
-				{{ form.content( class="u-full-width", style="height: 50vh" ) }}
-
-				<!-- submit button -->
-				{{ form.submit( class="button-primary" ) }}
-
+				<div class="margin-vertical-4">
+					<!-- submit button -->
+					{{ form.submit( class="button-primary" ) }}
+				</div>
 			</form>
-		</div>		
-	</section> 
+		</div>
+	</section>
 {% endblock content %}

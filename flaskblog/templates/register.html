@@ -1,5 +1,5 @@
-{% extends 'layout.html' %} 
-{% block content %} 
+{% extends 'layout.html' %}
+{% block content %}
 
 	<section class="section registration">
 		<div class="container">
@@ -9,76 +9,84 @@
 					<!-- add the CSRF token -->
 					{{ form.hidden_tag() }}
 
-					<!-- name field label -->
-					{{ form.name.label() }}
+					<fieldset {% if form.name.errors %}class="input-error"{% endif %}>
+						<!-- name field label -->
+						{{ form.name.label() }}
 
-					<!-- handle errors -->
-					{% if form.name.errors %}
-						<div class='message negative' style="padding: 1rem;">
+						<!-- name field input -->
+						{{ form.name() }}
+
+						<!-- handle errors -->
+						{% if form.name.errors %}
 							{% for error in form.name.errors %}
 								<p>{{ error }}</p>
 							{% endfor %}
-						</div>					
-					{% endif %}
+						{% else %}
+							<p>Enter your User name for your account</p>
+						{% endif %}
+					</fieldset>
 
-					<!-- name field input -->
-					{{ form.name(class='u-full-width') }}
+					<fieldset {% if form.email.errors %}class="input-error"{% endif %}>
+						<!-- email field label -->
+						{{ form.email.label() }}
 
-					<!-- email field label -->
-					{{ form.email.label() }}
+						<!-- email field input -->
+						{{ form.email()}}
 
-					<!-- handle errors -->
-					{% if form.email.errors %}
-						<div class='message negative' style="padding: 1rem;">
+						<!-- handle errors -->
+						{% if form.email.errors %}
 							{% for error in form.email.errors %}
 								<p>{{ error }}</p>
 							{% endfor %}
-						</div>					
-					{% endif %}
+						{% else %}
+							<p>Enter an Email Address that you actively use. This email will be used to log-in to your account</p>
+						{% endif %}
+					</fieldset>
 
-					<!-- email field input -->
-					{{ form.email(class='u-full-width')}}
+					<fieldset {% if form.password.errors %}class="input-error"{% endif %}>
+						<!-- password field label -->
+						{{ form.password.label() }}
 
-					<!-- password field label -->
-					{{ form.password.label() }}
+						<!-- password field input -->
+						{{ form.password(class='u-full-width') }}
 
-					<!-- handle errors -->
-					{% if form.password.errors %}
-						<div class='message negative' style="padding: 1rem;">
+						<!-- handle errors -->
+						{% if form.password.errors %}
 							{% for error in form.password.errors %}
 								<p>{{ error }}</p>
 							{% endfor %}
-						</div>					
-					{% endif %}
+						{% else %}
+							<p>Enter an alpha-numeric password which is at least 8-characters in length</p>
+						{% endif %}
+					</fieldset>
 
-					<!-- password field input -->
-					{{ form.password(class='u-full-width') }}
+					<fieldset {% if form.confirm_password.errors %}class="input-error"{% endif %}>
+						<!-- confirm password field label -->
+						{{ form.confirm_password.label() }}
 
-					<!-- confirm password field label -->
-					{{ form.confirm_password.label() }}
+						<!-- confirm password field input -->
+						{{ form.confirm_password() }}
 
-					<!-- handle errors -->
-					{% if form.confirm_password.errors %}
-						<div class='message negative' style="padding: 1rem;">
+						<!-- handle errors -->
+						{% if form.confirm_password.errors %}
 							{% for error in form.confirm_password.errors %}
 								<p>{{ error }}</p>
 							{% endfor %}
-						</div>					
-					{% endif %}
+						{% else %}
+							<p>Re-enter your password to ensure there are no mistakes</p>
+						{% endif %}
+					</fieldset>
 
-					<!-- confirm password field input -->
-					{{ form.confirm_password(class='u-full-width') }}
+					<div class="margin-vertical-4">
+						<!-- submit button -->
+						{{ form.submit(class='button-primary') }}
+					</div>
+				</form>
 
-					<br>
-
-					<!-- submit button -->
-					{{ form.submit(class='button-primary') }}
-
-					<!-- login button -->
-					<p>Already Have an Account?  <a href="{{ url_for('users.login')}}">Login</a></p>
-				</form>						
+				<!-- login button -->
+				<p>Already Have an Account?  <a href="{{ url_for('users.login')}}">Login</a></p>
 			</div>
 		</div>
 	</section>
 
-{% endblock content %} 
+{% endblock content %}

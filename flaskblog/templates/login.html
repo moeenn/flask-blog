@@ -1,5 +1,5 @@
-{% extends 'layout.html' %} 
-{% block content %} 
+{% extends 'layout.html' %}
+{% block content %}
 
 	<section class="section login">
 		<div class="container">
@@ -9,49 +9,52 @@
 					<!-- set the CSRF token -->
 					{{ form.hidden_tag() }}
 
-					<!-- email field label -->
-					{{ form.email.label() }}
+					<fieldset {% if form.email.errors %}class="input-error"{% endif %}>
+						<!-- email field label -->
+						{{ form.email.label() }}
 
-					<!-- handle errors -->
-					{% if form.email.errors %}
-						<div class='message negative' style="padding: 1rem;">
+						<!-- email field input -->
+						{{ form.email() }}
+
+						<!-- handle errors -->
+						{% if form.email.errors %}
 							{% for error in form.email.errors %}
 								<p>{{ error }}</p>
 							{% endfor %}
-						</div>					
-					{% endif %}
+						{% else %}
+							<p>Enter your Email address registered with us</p>
+						{% endif %}
+					</fieldset>
 
-					<!-- email field input -->
-					{{ form.email(class='u-full-width') }}
 
-					<!-- password field label -->
-					{{ form.password.label() }}
+					<fieldset {% if form.password.errors %}class="input-error"{% endif %}>
+						<!-- password field label -->
+						{{ form.password.label() }}
 
-					<!-- handle errors -->
-					{% if form.password.errors %}
-						<div class='message negative' style="padding: 1rem;">
+						<!-- email field input -->
+						{{ form.password() }}
+
+						<!-- handle errors -->
+						{% if form.password.errors %}
 							{% for error in form.password.errors %}
 								<p>{{ error }}</p>
 							{% endfor %}
-						</div>					
-					{% endif %}
+						{% else %}
+							<p>Enter the password for your account</p>
+						{% endif %}
+					</fieldset>
 
-					<!-- email field input -->
-					{{ form.password(class='u-full-width') }}
+					<fieldset>
+						<!-- remember me checkbox -->
+						{{ form.remember() }}
+						{{ form.remember.label() }}
+					</fieldset>
 
-					<br>
 					<!-- login button -->
-					{{ form.submit(class='button-primary') }}
-
-					<!-- remember me checkbox -->
-					<div class="u-pull-right">
-						<div style="disply:'inline-block';">
-							{{ form.remember.label() }}
-							{{ form.remember() }}
-						</div>
-						</div>
-					<div class="u-cf"></div>
-				</form>						
+					<div class="margin-vertical-4">
+						{{ form.submit(class='button-primary') }}
+					</div>
+				</form>
 
 				<!-- login button -->
 				<p>Forgot Password?  <a href="{{ url_for('users.recover_account')}}">Recover Account</a></p>
@@ -60,4 +63,4 @@
 		</div>
 	</section>
 
-{% endblock content %} 
+{% endblock content %}

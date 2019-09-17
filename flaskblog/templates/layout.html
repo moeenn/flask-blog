@@ -15,12 +15,11 @@
 
  	<!-- stylesheets -->
  	<link rel="stylesheet" href="{{ url_for('static', filename='css/normalize.css')}}">
- 	<link rel="stylesheet" href="{{ url_for('static', filename='css/skeleton.css')}}"> 
+ 	<link rel="stylesheet" href="{{ url_for('static', filename='css/skeleton.css')}}">
  	<link rel="stylesheet" href="{{ url_for('static', filename='css/skeleton-extended.css')}}">
- 	<link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css')}}">
  </head>
  <body>
- 	<section class="section sticky navigation">
+ 	<section class="section">
  		<div class="container">
  			<nav>
  				<a {% if request.path in url_for('main.home') %} class="active" {% endif %} href="{{ url_for('main.home') }}">Home</a>
@@ -31,17 +30,17 @@
 	 				<a {% if request.path == url_for('users.profile_settings') %} class="active" {% endif %} href="{{ url_for('users.profile_settings') }}">Settings</a>
  					<a href="{{ url_for('users.logout') }}">Logout</a>
  				{% else %}
-	 				<a {% if request.path == url_for('users.login') %} class="active" {% endif %} href=" {{ url_for('users.login') }}">Login</a>		
+	 				<a {% if request.path == url_for('users.login') %} class="active" {% endif %} href=" {{ url_for('users.login') }}">Login</a>
 	 				<a {% if request.path == url_for('users.register') %} class="active" {% endif %} href=" {{ url_for('users.register') }} ">Register</a>
  				{% endif %}
- 			</nav>
+			</nav>
  		</div>
  	</section>
  	<!-- display flashed messages here -->
  	{% with messages = get_flashed_messages( with_categories=True ) %}
  		{% if messages %}
  			{% for category, message in messages %}
- 				<section class="section flashed_messages">
+ 				<section class="section flashed_messages margin-vertical-1">
  					<div class="container">
  						<div class="message {{category}}">
  							<p>{{ message }}</p>
@@ -56,12 +55,13 @@
  	{% block content %}{% endblock content %}
 
  	<!-- footer section -->
- 	<section class="section footer">
+ 	<section class="section footer margin-vertical-2">
  		<div class="container">
-	 		<footer class="u-full-width">
+	 		<footer class="u-full-width content-align-center">
+				<hr>
 	 			<small>&copy Copyright 2019 - Muhammad Moeen</small>
-	 		</footer>		
+	 		</footer>
  		</div>
  	</section>
  </body>
- </html> 
+ </html>

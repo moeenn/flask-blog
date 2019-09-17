@@ -1,39 +1,42 @@
-{% extends 'layout.html' %} 
-{% block content %} 
+{% extends 'layout.html' %}
+{% block content %}
 
 	<section class="section login">
 		<div class="container">
 			<div class="one-half column">
 				<h3>{{ title }}</h3>
 				<div class="message info">
-					<p>If you have forgotten your password, please enter your email address in the field below. If the provided email address matches our records, an email will be sent to the same email address with the link to recover the password.</p>
+					<p>If you have forgotten your password, please enter your email address in the field below. If the provided email address matches our records, an email will be sent to the same email address with instructions to recover your password.</p>
 				</div>
-				<br>
+
 				<form action="{{ url_for('users.recover_account') }}" method="POST">
 					<!-- set the CSRF token -->
 					{{ form.hidden_tag() }}
 
-					<!-- email field label -->
-					{{ form.email.label() }}
+					<fieldset {% if form.email.errors %}class="input-error"{% endif %}>
+						<!-- email field label -->
+						{{ form.email.label() }}
 
-					<!-- handle errors -->
-					{% if form.email.errors %}
-						<div class='message negative' style="padding: 1rem;">
+						<!-- email field input -->
+						{{ form.email() }}
+
+						<!-- handle errors -->
+						{% if form.email.errors %}
 							{% for error in form.email.errors %}
 								<p>{{ error }}</p>
 							{% endfor %}
-						</div>					
-					{% endif %}
+						{% else %}
+							<p>Enter email address for your account to recover</p>
+						{% endif %}
+					</fieldset>
 
-					<!-- email field input -->
-					{{ form.email(class='u-full-width') }}
-
-					<br>
-					<!-- submit button -->
-					{{ form.submit(class='button-primary') }}
-				</form>						
+					<div class="margin-vertical-4">
+						<!-- submit button -->
+						{{ form.submit(class='button-primary') }}
+					</div>
+				</form>
 			</div>
 		</div>
 	</section>
 
-{% endblock content %} 
+{% endblock content %}
