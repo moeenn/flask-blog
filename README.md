@@ -12,6 +12,10 @@ A Monolithic Blogging Web Application created using following technologies
 * Flask-Login - Session Manager - [Link](https://pypi.org/project/Flask-Login/)
 * Pillow - Image Manipulation - [Link](https://pypi.org/project/Pillow/)
 
+## Usage
+```bash
+$ python3 ./run.py
+```
 
 ## Credit
 Special Thanks to Corey Schafer who is the Best Programming Teacher that I've ever had. Check him out
